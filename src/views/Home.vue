@@ -4,19 +4,25 @@
       <canvas ref="canv" @mousedown="dragMove($event)" @click="pickColor($event)"></canvas>
     </div>
     <div class="current-color">
-      <div style="float: left;line-height: 30px;margin-right: 30px"><span style="margin-right:10px">RGBA MODE</span><i-Switch v-model="mode" /></div>
+      <div style="float: left;line-height: 30px;margin-right: 30px"><span style="margin-right:10px">RGBA MODE</span>
+        <i-Switch v-model="mode"/>
+      </div>
       <div>
         <Upload name="pic" action="" :before-upload="handleUpload" :show-upload-list="false">
           <Button icon="ios-cloud-upload-outline">上传图片</Button>
         </Upload>
       </div>
     </div>
-    <div style="padding: 20px;">
-      <div v-for="e in colorList" class="picker-box" :style="'background:'+e" @click.stop="copy($event,mode?e:rgb2hex(e))">
-        {{mode?e:rgb2hex(e)}}
-      </div>
-    </div>
     <input ref="willCopy" style="position: fixed;left: -100vw" type="text" v-model="willCopy"></input>
+    <div class="color-list">
+      <div style="display: flex;padding: 4px" v-for="e in colorList">
+        <div class="picker-box" :style="'background:'+e"
+             @click.stop="copy($event,mode?e:rgb2hex(e))">
+          {{mode?e:rgb2hex(e)}}
+        </div>
+      </div>
+
+    </div>
   </div>
 </template>
 
@@ -24,7 +30,7 @@
   export default {
     data() {
       return {
-        mode:false,
+        mode: false,
         image: null,
         context: null,
         canvas: null,
@@ -77,8 +83,8 @@
       windowToCanvas(x, y) {
         let box = this.canvas.getBoundingClientRect();  //这个方法返回一个矩形对象，包含四个属性：left、top、right和bottom。分别表示元素各边与页面上边和左边的距离
         return {
-          x: (x - box.left - (box.width - this.canvas.width/2) / 2)*2,
-          y: (y - box.top - (box.height - this.canvas.height/2) / 2)*2
+          x: (x - box.left - (box.width - this.canvas.width / 2) / 2) * 2,
+          y: (y - box.top - (box.height - this.canvas.height / 2) / 2) * 2
         };
       },
       dragMove(event) {
@@ -134,14 +140,14 @@
         return `rgba(${imageData[0]},${imageData[1]},${imageData[2]},${imageData[3] / 255})`
       },
       pickColor(event) {
-        if (this.shadowImgX !== this.imgX || this.shadowImgY !== this.imgY){
+        if (this.shadowImgX !== this.imgX || this.shadowImgY !== this.imgY) {
           return
         }
         let pos = this.windowToCanvas(event.clientX, event.clientY);
         let imageData = this.context.getImageData(pos.x, pos.y, 1, 1).data;
-        this.colorList.push(this.getColor(imageData))
+        this.colorList.unshift(this.getColor(imageData))
       },
-      zero_fill_hex(num, digits ) {
+      zero_fill_hex(num, digits) {
         let s = num.toString(16);
         while (s.length < digits)
           s = "0" + s;
@@ -158,10 +164,10 @@
     mounted() {
       let that = this
       this.canvas = this.$refs.canv
-      this.canvas.width = (document.documentElement.clientWidth-50)*2
-      this.canvas.style.width = document.documentElement.clientWidth-50 +'px'
-      this.canvas.height = 600*2
-      this.canvas.style.height = 600 +'px'
+      this.canvas.width = (document.documentElement.clientWidth - 50) * 2
+      this.canvas.style.width = document.documentElement.clientWidth - 50 + 'px'
+      this.canvas.height = 600 * 2
+      this.canvas.style.height = 600 + 'px'
       this.context = this.canvas.getContext('2d')
 
       this.canvas.onmousewheel = this.canvas.onwheel = function (event) {    //滚轮放大缩小
@@ -200,11 +206,9 @@
   .picker-box {
     text-align: center;
     line-height: 32px;
-    width: 140px;
     height: 32px;
-    margin-right: 10px;
+    width: 100%;
     margin-bottom: 10px;
-    float: left;
     border-radius: 5px;
     color: white;
     box-shadow: 0 3px 30px 0 rgba(0, 0, 0, 0.5);
@@ -213,5 +217,16 @@
   canvas {
     margin: auto;
     border: 1px solid #d5dfff;
+  }
+
+  .color-list {
+    width: 160px;
+    height: 100vh;
+    position: fixed;
+    right: 0;
+    top: 0;
+    background: #403c3c;
+    overflow: auto;
+    text-align: center;
   }
 </style>
