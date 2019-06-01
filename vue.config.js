@@ -42,7 +42,7 @@ module.exports = {
     // 是否构建样式地图，false 将提高构建速度
     sourceMap: false,
   },
-  publicPath:'/color-picker-dist',
+  // publicPath:'/color-picker-dist',
   devServer: {
     disableHostCheck: true,
   },
