@@ -7,10 +7,18 @@
       <div style="float: left;line-height: 30px;margin-right: 30px"><span style="margin-right:10px">RGBA MODE</span>
         <i-Switch v-model="mode"/>
       </div>
-      <div>
+      <div style="float: left;margin-right: 10px">
         <Upload name="pic" action="" :before-upload="handleUpload" :show-upload-list="false">
-          <Button icon="ios-cloud-upload-outline">上传图片</Button>
+          <Button type="dashed" icon="ios-cloud-upload-outline">上传图片</Button>
         </Upload>
+      </div>
+      <div style="float: left">
+        <ButtonGroup>
+          <Button icon="logo-github" to="//github.com/pumelotea/color-picker" target="_blank">Star</Button>
+          <Button to="//squirrelzoo.com" target="_blank">关注我们【松鼠乐园】</Button>
+          <Button :to="`//github.com/pumelotea/color-picker/tree/${$window.buildRepoVer.split(':')[1].trim()}`" target="_blank">Version: {{$window.buildVer}}</Button>
+        </ButtonGroup>
+
       </div>
     </div>
     <input ref="willCopy" style="position: fixed;left: -100vw" type="text" v-model="willCopy"></input>
@@ -21,7 +29,6 @@
           {{mode?e:rgb2hex(e)}}
         </div>
       </div>
-
     </div>
   </div>
 </template>
@@ -70,7 +77,7 @@
       },
       draw() {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.drawGrid(this.context, "#d5dfff", 10, 10);
+        this.drawGrid(this.context, "#b6cbff", 20, 20);
         this.context.drawImage(
           this.image, //规定要使用的图像、画布或视频。
           0, 0,

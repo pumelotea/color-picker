@@ -12,6 +12,8 @@ import 'iview/dist/styles/iview.css';
 Vue.use(iView);
 Vue.use(HttpApi)
 
+Vue.prototype.$window = window
+
 Vue.config.productionTip = false
 new Vue({
   router,
