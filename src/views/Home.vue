@@ -164,8 +164,8 @@
     mounted() {
       let that = this
       this.canvas = this.$refs.canv
-      this.canvas.width = (document.documentElement.clientWidth - 50) * 2
-      this.canvas.style.width = document.documentElement.clientWidth - 50 + 'px'
+      this.canvas.width = (document.documentElement.clientWidth - 50 ) * 2
+      this.canvas.style.width = document.documentElement.clientWidth - 50  + 'px'
       this.canvas.height = 600 * 2
       this.canvas.style.height = 600 + 'px'
       this.context = this.canvas.getContext('2d')
@@ -208,7 +208,6 @@
     line-height: 32px;
     height: 32px;
     width: 100%;
-    margin-bottom: 10px;
     border-radius: 5px;
     color: white;
     box-shadow: 0 3px 30px 0 rgba(0, 0, 0, 0.5);
@@ -225,8 +224,9 @@
     position: fixed;
     right: 0;
     top: 0;
-    background: #403c3c;
+    background: rgba(0, 0, 0, 0.5);
     overflow: auto;
     text-align: center;
+    box-shadow: 0px 0px 30px 10px rgba(0, 0, 0, 0.5)
   }
 </style>
